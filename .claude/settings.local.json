@@ -32,7 +32,11 @@
       "Bash(dir /B)",
       "Bash(git init:*)",
       "Bash(git add:*)",
-      "Bash(del backendnul)"
+      "Bash(del backendnul)",
+      "Bash(git commit:*)",
+      "Bash(git remote add:*)",
+      "Bash(git branch:*)",
+      "Bash(git push:*)"
     ],
     "deny": [],
     "ask": []
