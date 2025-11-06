@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>スキルシート</title>
+  <style>
+    @page {
+      size: A4 portrait;
+      margin: 0;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Yu Gothic', 'Meiryo', 'メイリオ', '游ゴシック', sans-serif;
+      font-size: 10pt;
+      line-height: 1.5;
+      color: #000;
+      padding: 10mm;
+    }
+
+    .container {
+      width: 100%;
+    }
+
+    /* ヘッダー */
+    .header {
+      margin-bottom: 8mm;
+    }
+
+    .header .date {
+      text-align: right;
+      font-size: 10pt;
+      margin-bottom: 3mm;
+    }
+
+    .header h1 {
+      text-align: center;
+      font-size: 14pt;
+      font-weight: bold;
+      margin-bottom: 5mm;
+    }
+
+    /* セクション見出し */
+    .section-title {
+      font-size: 10pt;
+      font-weight: bold;
+      margin-top: 3mm;
+      margin-bottom: 2mm;
+    }
+
+    /* テーブル共通スタイル */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 3mm;
+      page-break-inside: avoid;
+    }
+
+    th, td {
+      border: 1px solid #000;
+      padding: 4px 6px;
+      vertical-align: middle;
+      font-size: 10pt;
+    }
+
+    th {
+      background-color: #f0f0f0;
+      font-weight: bold;
+      text-align: center;
+    }
+
+    td {
+      background-color: #fff;
+    }
+
+    /* 基本情報テーブル */
+    .basic-info th {
+      width: 8%;
+      text-align: center;
+      background-color: #f0f0f0;
+    }
+
+    .basic-info td {
+      text-align: left;
+      padding-left: 8px;
+    }
+
+    .basic-info .name-cell {
+      width: 20%;
+    }
+
+    .basic-info .gender-cell {
+      text-align: center;
+      width: 12%;
+      background-color: #fff;
+    }
+
+    .basic-info .age-label {
+      width: 8%;
+      text-align: center;
+      background-color: #f0f0f0;
+    }
+
+    .basic-info .age-value {
+      width: 10%;
+      text-align: left;
+      padding-left: 8px;
+    }
+
+    .basic-info .address-label {
+      width: 8%;
+      text-align: center;
+      background-color: #f0f0f0;
+    }
+
+    .basic-info .address-value {
+      text-align: left;
+      padding-left: 8px;
+    }
+
+    /* 経歴テーブル */
+    .education-table th {
+      width: 15%;
+      background-color: #f0f0f0;
+    }
+
+    .education-table td {
+      padding-left: 8px;
+      text-align: left;
+    }
+
+    /* 技術スキルテーブル */
+    .tech-skills-table th {
+      width: 15%;
+      background-color: #f0f0f0;
+    }
+
+    .tech-skills-table td {
+      background-color: #f9f9f9;
+      color: #999;
+      font-style: italic;
+      text-align: center;
+      padding: 6px;
+      word-wrap: break-word;
+      word-break: break-all;
+      overflow-wrap: break-word;
+    }
+
+    .skill-legend {
+      font-size: 9pt;
+      color: #666;
+      margin-bottom: 2mm;
+    }
+
+    /* 業務実績テーブル */
+    .work-experience-table {
+      font-size: 9pt;
+    }
+
+    .work-experience-table th {
+      font-weight: bold;
+      background-color: #d9d9d9;
+      padding: 5px 3px;
+      text-align: center;
+      vertical-align: middle;
+      font-size: 9pt;
+      line-height: 1.3;
+    }
+
+    .work-experience-table td {
+      padding: 4px 5px;
+      vertical-align: top;
+      font-size: 8.5pt;
+      line-height: 1.4;
+    }
+
+    .work-experience-table tbody tr {
+      page-break-inside: avoid;
+    }
+
+    .work-experience-table .no {
+      width: 4%;
+      text-align: center;
+      vertical-align: middle;
+    }
+
+    .work-experience-table .period {
+      width: 11%;
+      text-align: center;
+      font-size: 8pt;
+      line-height: 1.2;
+    }
+
+    .work-experience-table .industry {
+      width: 9%;
+      font-size: 8.5pt;
+    }
+
+    .work-experience-table .system {
+      width: 20%;
+      font-size: 8.5pt;
+    }
+
+    .work-experience-table .system strong {
+      font-weight: bold;
+      color: #000;
+    }
+
+    .work-experience-table .task-col {
+      width: 3%;
+      font-size: 8pt;
+      line-height: 1.4;
+      text-align: center;
+    }
+
+    .work-experience-table .env {
+      width: 16%;
+      font-size: 8pt;
+      line-height: 1.4;
+    }
+
+    .work-experience-table .lang {
+      width: 16%;
+      font-size: 8pt;
+      line-height: 1.4;
+    }
+
+    .task-legend {
+      font-size: 8.5pt;
+      color: #333;
+      margin-bottom: 2mm;
+      text-align: left;
+    }
+
+    /* 備考テーブル */
+    .remarks-table {
+      margin-bottom: 0;
+    }
+
+    .remarks-table th {
+      width: 10%;
+      background-color: #f0f0f0;
+      text-align: center;
+    }
+
+    .remarks-table td {
+      min-height: 30mm;
+      height: 30mm;
+      padding: 8px;
+      vertical-align: top;
+    }
+
+    /* チェックマーク */
+    .check-mark {
+      display: inline;
+      margin-right: 2px;
+    }
+
+    /* 改ページ */
+    .page-break {
+      page-break-after: always;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- ヘッダー -->
+    <div class="header">
+      <div class="date">2025年11月06日</div>
+      <h1>スキルシート</h1>
+    </div>
+
+    <!-- 基本情報 -->
+    <table class="basic-info">
+      <tr>
+        <th>氏名</th>
+        <td class="name-cell">K.S</td>
+        <td class="gender-cell">男 □ 女 □</td>
+        <th class="age-label">年齢</th>
+        <td class="age-value">20代</td>
+        <th class="address-label">住所</th>
+        <td class="address-value">東京都千代田区</td>
+      </tr>
+    </table>
+
+    <!-- 経歴 -->
+    <div class="section-title">●経歴</div>
+    <table class="education-table">
+      <tr>
+        <th>最終学歴</th>
+        <td>東京工業大学 情報工学部</td>
+      </tr>
+      <tr>
+        <th>学科</th>
+        <td>情報科学</td>
+      </tr>
+      <tr>
+        <th>資格</th>
+        <td>IPA 情報処理安全確保支援士、PMP、AWS認定</td>
+      </tr>
+    </table>
+
+    <!-- 技術スキル -->
+    <div class="section-title">●技術スキル</div>
+    <div class="skill-legend">※経験の長い順に記載</div>
+    <table class="tech-skills-table">
+      <tr>
+        <th>開発環境</th>
+        <td style="color: #000; font-style: normal; text-align: left; padding-left: 8px;">AWS、Docker、GitHub Actions、オンプレミス、クラウド各種、Terraform、Ansible</td>
+      </tr>
+      <tr>
+        <th>言語</th>
+        <td style="color: #000; font-style: normal; text-align: left; padding-left: 8px;">TypeScript、Node.js、React、SQLite、N/A (コンサルティング業務)、Python、Go、Bash</td>
+      </tr>
+    </table>
+
+    <!-- 業務実績 -->
+    <div class="section-title">●業務実績</div>
+    <div class="task-legend">※要：要件定義 基：基本設計 詳：詳細設計 開：開発 テ：テスト 運：運用・保守</div>
+    <table class="work-experience-table">
+      <thead>
+        <tr>
+          <th class="no">No</th>
+          <th class="period">期間<br>(開始/終了)</th>
+          <th class="industry">業種</th>
+          <th class="system">システム名</th>
+          <th class="task-col">要</th>
+          <th class="task-col">基</th>
+          <th class="task-col">詳</th>
+          <th class="task-col">開</th>
+          <th class="task-col">テ</th>
+          <th class="task-col">運</th>
+          <th class="env">開発環境</th>
+          <th class="lang">開発言語</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr>
+            <td class="no">1</td>
+            <td class="period">
+              2018/04<br>
+              /<br>
+                2020/03
+            </td>
+            <td class="industry">IT・通信</td>
+            <td class="system">クラウド基盤構築プロジェクト</td>
+            <td class="task-col">○</td>
+            <td class="task-col">○</td>
+            <td class="task-col">○</td>
+            <td class="task-col">○</td>
+            <td class="task-col">○</td>
+            <td class="task-col">○</td>
+            <td class="env">AWS、Docker、Terraform、Ansible</td>
+            <td class="lang">Python、Go、Bash</td>
+          </tr>
+          <tr>
+            <td class="no">2</td>
+            <td class="period">
+              2020/04<br>
+              /<br>
+                2022/12
+            </td>
+            <td class="industry">コンサルティング</td>
+            <td class="system">システム監査・セキュリティコンサルティング</td>
+            <td class="task-col">○</td>
+            <td class="task-col">○</td>
+            <td class="task-col"></td>
+            <td class="task-col"></td>
+            <td class="task-col">○</td>
+            <td class="task-col"></td>
+            <td class="env">オンプレミス、クラウド各種</td>
+            <td class="lang">N/A (コンサルティング業務)</td>
+          </tr>
+          <tr>
+            <td class="no">3</td>
+            <td class="period">
+              2023/01<br>
+              /<br>
+                現在
+            </td>
+            <td class="industry">IT・通信</td>
+            <td class="system">スキル管理システム開発・運用</td>
+            <td class="task-col">○</td>
+            <td class="task-col">○</td>
+            <td class="task-col">○</td>
+            <td class="task-col">○</td>
+            <td class="task-col">○</td>
+            <td class="task-col">○</td>
+            <td class="env">AWS、Docker、GitHub Actions</td>
+            <td class="lang">TypeScript、Node.js、React、SQLite</td>
+          </tr>
+      </tbody>
+    </table>
+
+    <!-- 備考 -->
+    <div class="section-title">備考</div>
+    <table class="remarks-table">
+      <tr>
+        <th>備考</th>
+        <td></td>
+      </tr>
+    </table>
+  </div>
+</body>
+</html>

@@ -1,0 +1,20 @@
+{
+  "name": "skill-management-system",
+  "version": "1.0.0",
+  "description": "Skill Management System - Full Stack Application",
+  "scripts": {
+    "install-all": "cd backend && npm install && cd ../frontend && npm install",
+    "build": "cd frontend && npm run build && cd ../backend && npm run build",
+    "start": "cd backend && npm start",
+    "dev:backend": "cd backend && npm run dev",
+    "dev:frontend": "cd frontend && npm run dev"
+  },
+  "keywords": [
+    "skill-management",
+    "fullstack",
+    "react",
+    "express"
+  ],
+  "author": "",
+  "license": "MIT"
+}

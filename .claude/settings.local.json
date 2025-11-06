@@ -1,0 +1,40 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm create:*)",
+      "Bash(mkdir:*)",
+      "Bash(npm install:*)",
+      "Bash(npx tailwindcss:*)",
+      "Bash(npm run dev:*)",
+      "Bash(timeout /t 3)",
+      "Bash(npm uninstall:*)",
+      "Bash(del tailwind.config.js)",
+      "Bash(del postcss.config.js)",
+      "Bash(npm run migrate:*)",
+      "Bash(npm run seed:*)",
+      "Bash(netstat:*)",
+      "Bash(findstr:*)",
+      "Bash(taskkill:*)",
+      "Bash(curl:*)",
+      "Bash(npx ts-node:*)",
+      "Bash(npm run seed:master:*)",
+      "Bash(npm run migrate:work-exp:*)",
+      "Bash(npm run add:customer-name:*)",
+      "Bash(npm run add:industries:*)",
+      "Bash(npm run seed:industries:*)",
+      "Bash(npm run migrate:industries:*)",
+      "Bash(npm run add:remarks:*)",
+      "Bash(npm run add:profile-fields:*)",
+      "Bash(npm run migrate:json-import:*)",
+      "Bash(nul)",
+      "Bash(cat:*)",
+      "Bash(sqlite3:*)",
+      "Bash(dir /B)",
+      "Bash(git init:*)",
+      "Bash(git add:*)",
+      "Bash(del backendnul)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}
