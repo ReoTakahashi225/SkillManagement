@@ -18,14 +18,36 @@ export const initDatabase = (): Promise<void> => {
         reject(err);
       } else {
         console.log('Connected to SQLite database');
-        // Enable foreign keys
-        db.run('PRAGMA foreign_keys = ON', (err) => {
-          if (err) {
-            console.error('Error enabling foreign keys:', err);
-            reject(err);
-          } else {
-            resolve();
-          }
+
+        // Performance optimization: Enable WAL mode and other pragmas
+        const pragmas = [
+          'PRAGMA foreign_keys = ON',
+          'PRAGMA journal_mode = WAL',           // Enable Write-Ahead Logging
+          'PRAGMA synchronous = NORMAL',         // Balance between safety and speed
+          'PRAGMA cache_size = -64000',          // 64MB cache
+          'PRAGMA temp_store = MEMORY',          // Store temp tables in memory
+          'PRAGMA mmap_size = 30000000000',      // Memory-mapped I/O
+          'PRAGMA page_size = 4096',             // Optimal page size
+          'PRAGMA busy_timeout = 5000'           // Wait 5s for locks
+        ];
+
+        let completed = 0;
+        let hasError = false;
+
+        pragmas.forEach((pragma) => {
+          db.run(pragma, (err) => {
+            if (err && !hasError) {
+              console.error(`Error running ${pragma}:`, err);
+              hasError = true;
+              reject(err);
+            } else {
+              completed++;
+              if (completed === pragmas.length && !hasError) {
+                console.log('Database performance optimizations applied');
+                resolve();
+              }
+            }
+          });
         });
       }
     });

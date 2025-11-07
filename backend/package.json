@@ -10,6 +10,7 @@
     "migrate": "ts-node src/database/migrate.ts",
     "seed": "ts-node src/database/seed.ts",
     "db:reset": "npm run migrate && npm run seed",
+    "db:optimize": "ts-node src/database/add_performance_indexes.ts",
     "seed:master": "ts-node src/database/seed_master_data.ts",
     "migrate:work-exp": "ts-node src/database/migrate_work_experience_data.ts",
     "add:customer-name": "ts-node src/database/add_customer_name.ts",
