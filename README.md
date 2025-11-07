@@ -30,7 +30,7 @@
 - Node.js
 - Express
 - TypeScript
-- SQLite
+- SQLite (WALモード + パフォーマンス最適化)
 - JWT認証
 - Gemini AI API
 
@@ -66,6 +66,7 @@ GEMINI_API_KEY=your-gemini-api-key
 cd backend
 npm run migrate
 npm run seed
+npm run db:optimize  # パフォーマンスインデックスを適用
 ```
 
 ### 開発サーバーの起動
@@ -100,11 +101,12 @@ npm run dev:frontend
 ├── backend/              # バックエンド（Express + TypeScript）
 │   ├── src/
 │   │   ├── controllers/ # コントローラー
+│   │   ├── database/    # データベース関連
 │   │   ├── middleware/  # 認証ミドルウェア
 │   │   ├── routes/      # APIルート
 │   │   ├── services/    # Gemini AIサービス
 │   │   └── index.ts     # エントリーポイント
-│   ├── database.db      # SQLiteデータベース
+│   ├── database.sqlite  # SQLiteデータベース
 │   └── uploads/         # アップロードファイル
 ├── frontend/            # フロントエンド（React + TypeScript）
 │   ├── src/
@@ -114,20 +116,35 @@ npm run dev:frontend
 │   │   ├── pages/       # ページコンポーネント
 │   │   └── types/       # TypeScript型定義
 │   └── dist/            # ビルド成果物
+├── docs/                # ドキュメント
+│   ├── API_DOCUMENTATION.md
+│   ├── VERCEL_DEPLOYMENT.md
+│   ├── PDF_EXPORT_TESTING.md
+│   ├── PROJECT_STATUS.md
+│   └── ROADMAP.md
 ├── vercel.json          # Vercel設定
-├── Procfile             # Railway/Heroku設定
 └── package.json         # ルートパッケージ設定
 ```
 
 ## デプロイ
 
-### 推奨: Railway
-SQLiteをそのまま使用でき、最も簡単にデプロイできます。
-詳細は [RAILWAY_DEPLOYMENT.md](RAILWAY_DEPLOYMENT.md) を参照してください。
+### AWS EC2（推奨）
+SQLiteをそのまま使用でき、本番環境に適しています。
+- t3.small インスタンスで月額 $10-15
+- 20-30人の同時接続に対応
+- WALモードとパフォーマンス最適化済み
 
 ### Vercel
-サーバーレス環境で動作させる場合。データベースの移行が必要です。
-詳細は [VERCEL_DEPLOYMENT.md](VERCEL_DEPLOYMENT.md) を参照してください。
+サーバーレス環境で動作させる場合。
+詳細は [docs/VERCEL_DEPLOYMENT.md](docs/VERCEL_DEPLOYMENT.md) を参照してください。
+
+## ドキュメント
+
+- [API仕様書](docs/API_DOCUMENTATION.md)
+- [プロジェクトステータス](docs/PROJECT_STATUS.md)
+- [ロードマップ](docs/ROADMAP.md)
+- [PDF出力テスト](docs/PDF_EXPORT_TESTING.md)
+- [Vercelデプロイ手順](docs/VERCEL_DEPLOYMENT.md)
 
 ## 主な画面
 
