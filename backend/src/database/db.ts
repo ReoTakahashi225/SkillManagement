@@ -6,10 +6,10 @@ import fs from 'fs';
 const DB_PATH = path.join(__dirname, '../../database.sqlite');
 const SCHEMA_PATH = path.join(__dirname, 'schema.sql');
 
-// SQLite database connection
+// SQLiteデータベース接続
 let db: sqlite3.Database;
 
-// Initialize database connection
+// データベース接続の初期化
 export const initDatabase = (): Promise<void> => {
   return new Promise((resolve, reject) => {
     db = new sqlite3.Database(DB_PATH, (err) => {
@@ -19,16 +19,16 @@ export const initDatabase = (): Promise<void> => {
       } else {
         console.log('Connected to SQLite database');
 
-        // Performance optimization: Enable WAL mode and other pragmas
+        // パフォーマンス最適化: WALモードとその他のプラグマを有効化
         const pragmas = [
           'PRAGMA foreign_keys = ON',
-          'PRAGMA journal_mode = WAL',           // Enable Write-Ahead Logging
-          'PRAGMA synchronous = NORMAL',         // Balance between safety and speed
-          'PRAGMA cache_size = -64000',          // 64MB cache
-          'PRAGMA temp_store = MEMORY',          // Store temp tables in memory
-          'PRAGMA mmap_size = 30000000000',      // Memory-mapped I/O
-          'PRAGMA page_size = 4096',             // Optimal page size
-          'PRAGMA busy_timeout = 5000'           // Wait 5s for locks
+          'PRAGMA journal_mode = WAL',           // Write-Ahead Loggingを有効化
+          'PRAGMA synchronous = NORMAL',         // 安全性と速度のバランス
+          'PRAGMA cache_size = -64000',          // 64MBキャッシュ
+          'PRAGMA temp_store = MEMORY',          // 一時テーブルをメモリに保存
+          'PRAGMA mmap_size = 30000000000',      // メモリマップドI/O
+          'PRAGMA page_size = 4096',             // 最適なページサイズ
+          'PRAGMA busy_timeout = 5000'           // ロック待機時間5秒
         ];
 
         let completed = 0;

@@ -1,15 +1,15 @@
 import { Request, Response, NextFunction } from 'express';
 import { verifyToken, JwtPayload } from '../utils/jwt';
 
-// Extend Express Request type to include user
+// Express Requestの型を拡張してユーザー情報を含める
 export interface AuthRequest extends Request {
   user?: JwtPayload;
 }
 
-// Authentication middleware
+// 認証ミドルウェア
 export const authenticate = (req: AuthRequest, res: Response, next: NextFunction): void => {
   try {
-    // Get token from Authorization header
+    // Authorizationヘッダーからトークンを取得
     const authHeader = req.headers.authorization;
 
     if (!authHeader || !authHeader.startsWith('Bearer ')) {
@@ -17,12 +17,12 @@ export const authenticate = (req: AuthRequest, res: Response, next: NextFunction
       return;
     }
 
-    const token = authHeader.substring(7); // Remove 'Bearer ' prefix
+    const token = authHeader.substring(7); // 'Bearer 'プレフィックスを削除
 
-    // Verify token
+    // トークンを検証
     const decoded = verifyToken(token);
 
-    // Attach user info to request
+    // ユーザー情報をリクエストに追加
     req.user = decoded;
 
     next();
@@ -31,7 +31,7 @@ export const authenticate = (req: AuthRequest, res: Response, next: NextFunction
   }
 };
 
-// Admin-only middleware (must be used after authenticate middleware)
+// 管理者専用ミドルウェア（authenticateミドルウェアの後に使用する必要があります）
 export const requireAdmin = (req: AuthRequest, res: Response, next: NextFunction): void => {
   try {
     if (!req.user) {
